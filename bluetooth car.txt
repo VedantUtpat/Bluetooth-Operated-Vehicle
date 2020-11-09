@@ -1,0 +1,147 @@
+
+#include <SoftwareSerial.h>
+SoftwareSerial mySerial(4,5);
+
+int rm1=8; //left motor output 1
+int rm2=9; //left motor output 2
+int lm1=10;  //right motor output 1
+int lm2=11;  //right motor output 2
+
+int led=2;
+
+//int ENA= 6;
+//int ENB=7;
+
+
+void setup()
+{
+    mySerial.begin(9600);
+    Serial.begin(9600);
+ 
+ pinMode(lm1,OUTPUT);
+ pinMode(lm2,OUTPUT);
+ pinMode(rm1,OUTPUT);
+ pinMode(rm2,OUTPUT);
+ pinMode(led,OUTPUT);
+
+
+
+}
+
+
+void loop()
+    {
+
+    int i;
+     
+    if (mySerial.available())
+    {
+
+    	i=mySerial.read();
+   	Serial.println("DATA RECEIVED:");
+  
+    	if(i=='1')
+    	{
+
+  	  ForWard();
+  	
+	}
+    
+    	if(i=='2')
+    	{
+
+    	   Right();
+    	
+	}
+   
+   	 if(i=='3')
+        {
+
+	    Left();
+    
+	}
+
+	 if(i=='4')
+	{
+
+	    sTOP();
+    
+	}
+
+	 if(i=='5')
+	{
+
+	    BackWard();
+    	
+	}
+
+	 if(i=='6')
+	{
+
+	    digitalWrite (led, HIGH);
+    
+	}
+
+	if(i=='7')
+        {
+
+	   digitalWrite (led, LOW);
+    
+	}
+
+
+     }
+
+
+
+   }
+
+
+
+ void ForWard()
+ 	{
+  
+  	  digitalWrite(lm1,HIGH);
+	  digitalWrite(lm2,LOW);
+	  digitalWrite(rm1,HIGH);
+	  digitalWrite(rm2,LOW);
+  	}
+ 
+void BackWard()
+	 {
+  
+  	  digitalWrite(lm1,LOW);	
+	  digitalWrite(lm2,HIGH);
+	  digitalWrite(rm1,LOW);
+  	  digitalWrite(rm2,HIGH);
+ 
+ 	  }
+ 
+void Left()
+ {
+  
+  digitalWrite(lm1,LOW);
+  digitalWrite(lm2,LOW);
+  digitalWrite(rm1,HIGH);
+  digitalWrite(rm2,LOW);
+ }
+
+
+ void Right()
+ {
+  
+  digitalWrite(lm1,HIGH);
+  digitalWrite(lm2,LOW);
+  digitalWrite(rm1,LOW);
+  digitalWrite(rm2,LOW);
+    
+ }  
+
+   void sTOP()
+ {
+  digitalWrite(lm1,LOW);
+  digitalWrite(lm2,LOW);
+  digitalWrite(rm1,LOW);
+  digitalWrite(rm2,LOW);
+}
+
